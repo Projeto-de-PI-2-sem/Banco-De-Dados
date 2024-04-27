@@ -1,7 +1,7 @@
 create database Notelog;
 
 	use Notelog;
-
+    
 	-- Criar tabela Empresa
 	CREATE TABLE Empresa (
 		id INT PRIMARY KEY AUTO_INCREMENT,
@@ -9,6 +9,9 @@ create database Notelog;
 		cnpj CHAR(18),
 		email VARCHAR(45)
 	);
+    
+    insert into empresa values 
+    (null, 'empresa1', '123456789010111213', 'empresa1@gmail.com');
 
 	-- Criar tabela Usuário
 	CREATE TABLE Usuario (
@@ -19,7 +22,10 @@ create database Notelog;
 		CONSTRAINT FK_Usuario_Empresa FOREIGN KEY (fkEmpresa)
 			REFERENCES Empresa(id)
 	);
-
+    
+    insert into usuario values
+    (null, 'usuario1', '12345', 1);
+    
 	-- Criar tabela Endereco
 	CREATE TABLE Endereco (
 		id INT PRIMARY KEY AUTO_INCREMENT,
@@ -41,7 +47,7 @@ create database Notelog;
 		fkUsuarioEmpresa INT,
 		primary key (id, fkUsuario, fkUsuarioEmpresa),
 		nome VARCHAR(45),
-		cargo CHAR(11),
+		cargo VARCHAR(45),
 		email VARCHAR(45),
 		fkEmpresa INT,
 		CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
@@ -51,6 +57,9 @@ create database Notelog;
 		CONSTRAINT FK_Funcionario_Usuario_Empresa FOREIGN KEY (fkUsuarioEmpresa)
 			REFERENCES Usuario(fkEmpresa)
 	);
+    
+    insert into funcionario values
+    (null, 1, 1, 'funcionario1', 'cargo', 'funcionario@gmail.cim', 1);
 
 	-- Criar tabela Notebook
 	CREATE TABLE Notebook (
@@ -98,7 +107,7 @@ create database Notelog;
 	CREATE TABLE DiscoRigido (
 		id INT AUTO_INCREMENT PRIMARY KEY,
         fkNotebook INT,
-		modelo VARCHAR(45),
+		modelo VARCHAR(100),
 		`serial` VARCHAR(45),
 		tamanho VARCHAR(45),
 	  CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
@@ -113,7 +122,7 @@ create database Notelog;
 		bytesLeitura VARCHAR(45),
 		escrita VARCHAR(45),
 		bytesEscrita VARCHAR(45),
-		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
+		CONSTRAINT FK_LogDisco_DiscosRigidos FOREIGN KEY (fkDiscoRigido)
 			REFERENCES DiscoRigido (id)
 	);
 
@@ -165,6 +174,14 @@ create database Notelog;
 select * from Geolocalizacao;
 select * from Notebook;
 select * from TempoDeAtividade;
+select * from ram;
+select * from discorigido;
+select * from `cpu`;
+select * from logram;
+select * from logdisco;
+select * from logjanelas;
+select * from logcpu;
 select * from Ram join LogRam on Ram.id = fkRam;
 select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
-select * from DiscosRigidos join LogDiscos on DiscosRigidos.id = fkDisco;
+select * from DiscoRigido;
+SELECT LAST_INSERT_ID() from DiscoRigido;
