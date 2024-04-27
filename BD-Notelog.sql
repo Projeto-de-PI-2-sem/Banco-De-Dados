@@ -1,4 +1,4 @@
-	create database Notelog;
+create database Notelog;
 
 	use Notelog;
 
@@ -64,7 +64,7 @@
 	);
 
 	-- Criar tabela CPU
-	CREATE TABLE `cpu` (
+	CREATE TABLE `Cpu` (
 	  id INT AUTO_INCREMENT PRIMARY KEY,
 	  nome VARCHAR(45),
 	  numeroFisico VARCHAR(45),
@@ -79,20 +79,20 @@
 	  fkCpu INT,
 	  porcentagemUso VARCHAR(45),
 	  CONSTRAINT FK_LogCpu_Cpu FOREIGN KEY (fkCpu)
-		REFERENCES `cpu` (id)
+		REFERENCES `Cpu` (id)
 	);
 
 	-- Criar tabela LogJanelas
 	CREATE TABLE LogJanelas (
 	  id INT AUTO_INCREMENT PRIMARY KEY,
-	  enderecoJanela VARCHAR(45),
+	  idJanela VARCHAR(45),
 	  fkNotebook INT,
 	  CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
 
 	-- Criar tabela Disco
-	CREATE TABLE DiscoRigido (
+	CREATE TABLE DiscosRigidos (
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		modelo VARCHAR(45),
 		`serial` VARCHAR(45),
@@ -102,18 +102,18 @@
 	-- Criar tabela LogDisco
 	CREATE TABLE LogDiscos (
 		id INT AUTO_INCREMENT,
-		fkDiscos INT,
+		fkDisco INT,
 		fkNotebook INT,
 		primary key (id),
-		-- fkDiscoRigido, fkNotebook
-		leituras VARCHAR(45),
+		-- fkDiscosRigidos, fkNotebook
+		leitura VARCHAR(45),
 		bytesLeitura VARCHAR(45),
-		escritas VARCHAR(45),
-		bytesEscritas VARCHAR(45),
+		escrita VARCHAR(45),
+		bytesEscrita VARCHAR(45),
 		CONSTRAINT FK_LogDisco_Notebook FOREIGN KEY (fkNotebook)
 			REFERENCES Notebook (id),
-		CONSTRAINT FK_LogDisco_DiscoRgido FOREIGN KEY (fkDiscoRigido)
-			REFERENCES DiscoRigido (id)
+		CONSTRAINT FK_LogDisco_DiscosRigidos FOREIGN KEY (fkDisco)
+			REFERENCES DiscosRigidos (id)
 	);
 
 	-- Criando tabela TempoDeAtividade
@@ -127,7 +127,7 @@
 	);
 
 	-- Criando tabela Ram
-	CREATE TABLE ram (
+	CREATE TABLE Ram (
 		id INT PRIMARY KEY AUTO_INCREMENT,
 		totalMemoria varchar(45)
 	);
@@ -144,7 +144,7 @@
 		CONSTRAINT FK_LogRam_Notebook FOREIGN KEY (fkNotebook)
 			REFERENCES Notebook (id),
 		CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
-			REFERENCES ram (id)
+			REFERENCES Ram (id)
 	);
 
 	-- Criando tabela Geolocalizacao
@@ -164,3 +164,10 @@
 	  CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
 			REFERENCES Notebook (id)
 	);
+    
+select * from Geolocalizacao;
+select * from Notebook;
+select * from TempoDeAtividade;
+select * from Ram join LogRam on Ram.id = fkRam;
+select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
+select * from DiscosRigidos join LogDiscos on DiscosRigidos.id = fkDisco;
