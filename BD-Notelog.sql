@@ -66,11 +66,14 @@ create database Notelog;
 	-- Criar tabela CPU
 	CREATE TABLE `Cpu` (
 	  id INT AUTO_INCREMENT PRIMARY KEY,
+      fkNotebook INT,
 	  nome VARCHAR(45),
 	  numeroFisico VARCHAR(45),
 	  numerologico VARCHAR(45),
 	  idFisicoProcessador VARCHAR(45),
-	  frequencia VARCHAR(45)
+	  frequencia VARCHAR(45),
+	  CONSTRAINT FK_Cpu_Notebook FOREIGN KEY (fkNotebook)
+		REFERENCES Notebook (id)
 	);
 
 	-- Criar tabela LogCPU
@@ -92,28 +95,26 @@ create database Notelog;
 	);
 
 	-- Criar tabela Disco
-	CREATE TABLE DiscosRigidos (
+	CREATE TABLE DiscoRigido (
 		id INT AUTO_INCREMENT PRIMARY KEY,
+        fkNotebook INT,
 		modelo VARCHAR(45),
 		`serial` VARCHAR(45),
-		tamanho VARCHAR(45)
+		tamanho VARCHAR(45),
+	  CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
+		REFERENCES Notebook (id)
 	);
 
 	-- Criar tabela LogDisco
-	CREATE TABLE LogDiscos (
-		id INT AUTO_INCREMENT,
-		fkDisco INT,
-		fkNotebook INT,
-		primary key (id),
-		-- fkDiscosRigidos, fkNotebook
+	CREATE TABLE LogDisco (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		fkDiscoRigido int,
 		leitura VARCHAR(45),
 		bytesLeitura VARCHAR(45),
 		escrita VARCHAR(45),
 		bytesEscrita VARCHAR(45),
-		CONSTRAINT FK_LogDisco_Notebook FOREIGN KEY (fkNotebook)
-			REFERENCES Notebook (id),
-		CONSTRAINT FK_LogDisco_DiscosRigidos FOREIGN KEY (fkDisco)
-			REFERENCES DiscosRigidos (id)
+		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
+			REFERENCES DiscoRigido (id)
 	);
 
 	-- Criando tabela TempoDeAtividade
@@ -129,30 +130,26 @@ create database Notelog;
 	-- Criando tabela Ram
 	CREATE TABLE Ram (
 		id INT PRIMARY KEY AUTO_INCREMENT,
-		totalMemoria varchar(45)
+        fkNotebook INT,
+		totalMemoria varchar(45),
+	  CONSTRAINT FK_Ram_Notebook FOREIGN KEY (fkNotebook)
+		REFERENCES Notebook (id)
 	);
 
 	-- Criando tabela LogRAM
 	CREATE TABLE LogRam (
-		id INT AUTO_INCREMENT,
-		fkNotebook INT,
+		id INT AUTO_INCREMENT PRIMARY KEY,
 		fkRam INT,
-		primary key(id),
-		-- fkNotebook, fkRAM
 		usoMemoria VARCHAR(45),
 		memoriaDisponivel VARCHAR(45),
-		CONSTRAINT FK_LogRam_Notebook FOREIGN KEY (fkNotebook)
-			REFERENCES Notebook (id),
 		CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
 			REFERENCES Ram (id)
 	);
 
 	-- Criando tabela Geolocalizacao
 	CREATE TABLE Geolocalizacao (
-	  id INT AUTO_INCREMENT,
+	  id INT AUTO_INCREMENT PRIMARY KEY,
 	  fkNotebook INT,
-	  primary key(id),
-	  -- fkNotebook
 	  enderecoIP VARCHAR(45),
 	  pais VARCHAR(45),
 	  cidade VARCHAR(45),
