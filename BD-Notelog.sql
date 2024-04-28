@@ -21,7 +21,7 @@ INSERT INTO Empresa (nome,CNPJ, email) VALUES
 
 	-- Criar tabela Funcionario
 CREATE TABLE Funcionario (
-    idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
     cargo CHAR(45),
     email VARCHAR(45),
@@ -47,6 +47,8 @@ INSERT INTO Funcionario (nome, cargo, email, fkEmpresa) VALUES
 		CONSTRAINT fkFuncionario FOREIGN KEY (fkFuncionario)
 			REFERENCES Funcionario (id)
 	);
+    
+    ALTER TABLE Usuario RENAME COLUMN idUsuario TO id;
     
     -- Usuários para Moveis S.A
 INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
@@ -179,7 +181,7 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 	);
     
 select * from Geolocalizacao;
-select * from Notebook;
+select * from Notebook;	
 select * from TempoDeAtividade;
 select * from ram;
 select * from discorigido;
