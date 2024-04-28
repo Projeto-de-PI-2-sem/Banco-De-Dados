@@ -1,24 +1,58 @@
-create database Notelog;
+create database notelog;
 
-	use Notelog;
+-- drop database notelog;
+
+use notelog;
+
 
 	-- Criar tabela Empresa
 	CREATE TABLE Empresa (
-		id INT PRIMARY KEY AUTO_INCREMENT,
+		idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45),
 		cnpj CHAR(18),
 		email VARCHAR(45)
 	);
+    
+INSERT INTO Empresa (nome,CNPJ, email) VALUES 
+('Moveis S.A','08.540.322/0001-35','moveissa@gmail.com'),
+('SolutionsBurn IT','65.719.677/0001-20','solutionsburnit@gmail.com'),
+('InfraTech','26.897.566/0001-51','infratech@gmail.com');
+
+
+	-- Criar tabela Funcionario
+CREATE TABLE Funcionario (
+    idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    cargo CHAR(45),
+    email VARCHAR(45),
+    fkEmpresa INT,
+    CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
+        REFERENCES Empresa(idEmpresa)
+);
+
+INSERT INTO Funcionario (nome, cargo, email, fkEmpresa) VALUES
+('João', 'Gerente', 'joao@moveissa.com',1),
+('Ana', 'Técnico', 'ana@solutionsburnit.com',2),
+('Camila', 'Desenvolvedor', 'camila@infratech.com',3);
 
 	-- Criar tabela Usuário
 	CREATE TABLE Usuario (
-		id INT PRIMARY KEY AUTO_INCREMENT,
+		idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45),
-		senha VARCHAR(10),
+		senha VARCHAR(45),
 		fkEmpresa INT,
+        fkFuncionario INT,
 		CONSTRAINT FK_Usuario_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(id)
+			REFERENCES Empresa(idEmpresa),
+		CONSTRAINT fkFuncionario FOREIGN KEY (fkFuncionario)
+			REFERENCES Funcionario (idFuncionario)
 	);
+    
+    -- Usuários para Moveis S.A
+INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
+('JoaoMoveis', 'senha123', 1, 1),
+('AnaSolutions', 'solutions456', 2, 2),
+('CamilaInfraTech', 'infra789', 3, 3);
 
 	-- Criar tabela Endereco
 	CREATE TABLE Endereco (
@@ -31,25 +65,7 @@ create database Notelog;
 		cep CHAR(8),
 		fkEmpresa INT,
 		CONSTRAINT FK_Endereco_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(id)
-	);
-
-	-- Criar tabela Funcionario
-	CREATE TABLE Funcionario (
-		id INT AUTO_INCREMENT,
-		fkUsuario INT,
-		fkUsuarioEmpresa INT,
-		primary key (id, fkUsuario, fkUsuarioEmpresa),
-		nome VARCHAR(45),
-		cargo CHAR(11),
-		email VARCHAR(45),
-		fkEmpresa INT,
-		CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(id),
-		CONSTRAINT FK_Funcionario_Usuario FOREIGN KEY (fkUsuario)
-			REFERENCES Usuario(id),
-		CONSTRAINT FK_Funcionario_Usuario_Empresa FOREIGN KEY (fkUsuarioEmpresa)
-			REFERENCES Usuario(fkEmpresa)
+			REFERENCES Empresa(idEmpresa)
 	);
 
 	-- Criar tabela Notebook
@@ -60,7 +76,7 @@ create database Notelog;
 	  arquitetura VARCHAR(45),
 	  fkFuncionario INT,
 	  CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
-			REFERENCES Funcionario (id)
+			REFERENCES Funcionario (idFuncionario)
 	);
 
 	-- Criar tabela CPU
@@ -167,4 +183,4 @@ select * from Notebook;
 select * from TempoDeAtividade;
 select * from Ram join LogRam on Ram.id = fkRam;
 select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
-select * from DiscosRigidos join LogDiscos on DiscosRigidos.id = fkDisco;
+select * from DiscoRigido join LogDisco on DiscoRigido.id = fkDiscoRigido;
