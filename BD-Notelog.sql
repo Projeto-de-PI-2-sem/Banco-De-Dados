@@ -21,7 +21,7 @@ INSERT INTO Empresa (nome,CNPJ, email) VALUES
 
 	-- Criar tabela Funcionario
 CREATE TABLE Funcionario (
-    idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
     cargo CHAR(45),
     email VARCHAR(45),
