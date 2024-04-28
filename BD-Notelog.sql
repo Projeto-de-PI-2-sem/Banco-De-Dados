@@ -178,6 +178,12 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 			REFERENCES Notebook (id)
 	);
     
+    CREATE USER 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeagod';
+    
+    GRANT SELECT, INSERT, UPDATE, DELETE ON notelog.* TO 'notelogUser'@'localhost';
+    
+    FLUSH PRIVILEGES;
+    
 select * from Geolocalizacao;
 select * from Notebook;
 select * from TempoDeAtividade;
@@ -192,3 +198,4 @@ select * from Ram join LogRam on Ram.id = fkRam;
 select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
 select * from DiscoRigido;
 SELECT LAST_INSERT_ID() from DiscoRigido;
+select * from Funcionario;
