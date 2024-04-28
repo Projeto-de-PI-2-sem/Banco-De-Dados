@@ -7,7 +7,7 @@ use notelog;
 
 	-- Criar tabela Empresa
 	CREATE TABLE Empresa (
-		idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+		id INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45),
 		cnpj CHAR(18),
 		email VARCHAR(45)
@@ -27,7 +27,7 @@ CREATE TABLE Funcionario (
     email VARCHAR(45),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
-        REFERENCES Empresa(idEmpresa)
+        REFERENCES Empresa(id)
 );
 
 INSERT INTO Funcionario (nome, cargo, email, fkEmpresa) VALUES
@@ -43,9 +43,9 @@ INSERT INTO Funcionario (nome, cargo, email, fkEmpresa) VALUES
 		fkEmpresa INT,
         fkFuncionario INT,
 		CONSTRAINT FK_Usuario_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(idEmpresa),
+			REFERENCES Empresa(id),
 		CONSTRAINT fkFuncionario FOREIGN KEY (fkFuncionario)
-			REFERENCES Funcionario (idFuncionario)
+			REFERENCES Funcionario (id)
 	);
     
     -- Usuários para Moveis S.A
@@ -65,7 +65,7 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 		cep CHAR(8),
 		fkEmpresa INT,
 		CONSTRAINT FK_Endereco_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(idEmpresa)
+			REFERENCES Empresa(id)
 	);
 
 	-- Criar tabela Notebook
@@ -76,7 +76,7 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 	  arquitetura VARCHAR(45),
 	  fkFuncionario INT,
 	  CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
-			REFERENCES Funcionario (idFuncionario)
+			REFERENCES Funcionario (id)
 	);
 
 	-- Criar tabela CPU
@@ -181,6 +181,14 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 select * from Geolocalizacao;
 select * from Notebook;
 select * from TempoDeAtividade;
+select * from ram;
+select * from discorigido;
+select * from `cpu`;
+select * from logram;
+select * from logdisco;
+select * from logjanelas;
+select * from logcpu;
 select * from Ram join LogRam on Ram.id = fkRam;
 select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
-select * from DiscoRigido join LogDisco on DiscoRigido.id = fkDiscoRigido;
+select * from DiscoRigido;
+SELECT LAST_INSERT_ID() from DiscoRigido;
