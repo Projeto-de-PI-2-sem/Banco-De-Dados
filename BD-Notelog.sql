@@ -25,36 +25,20 @@ CREATE TABLE Funcionario (
     nome VARCHAR(45),
     cargo CHAR(45),
     email VARCHAR(45),
+    senha VARCHAR(45),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
         REFERENCES Empresa(id)
 );
-
-INSERT INTO Funcionario (nome, cargo, email, fkEmpresa) VALUES
-('João', 'Gerente', 'joao@moveissa.com',1),
-('Ana', 'Técnico', 'ana@solutionsburnit.com',2),
-('Camila', 'Desenvolvedor', 'camila@infratech.com',3);
-
-	-- Criar tabela Usuário
-	CREATE TABLE Usuario (
-		idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-		nome VARCHAR(45),
-		senha VARCHAR(45),
-		fkEmpresa INT,
-        fkFuncionario INT,
-		CONSTRAINT FK_Usuario_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(id),
-		CONSTRAINT fkFuncionario FOREIGN KEY (fkFuncionario)
-			REFERENCES Funcionario (id)
-	);
-    
-    ALTER TABLE Usuario RENAME COLUMN idUsuario TO id;
     
     -- Usuários para Moveis S.A
-INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
-('JoaoMoveis', 'senha123', 1, 1),
-('AnaSolutions', 'solutions456', 2, 2),
-('CamilaInfraTech', 'infra789', 3, 3);
+INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
+('Jozias Duarte', 'Gerente', 'joao@moveissa.com', 'senha123', 1),
+('Ana Pimpolim', 'Técnico', 'ana@solutionsburnit.com', 'solutions456', 2),
+('Camila da Silva', 'Desenvolvedor', 'camila@infratech.com', 'infra789', 3),
+('Henrique de Moraes', 'Dev', 'joao@moveissa.com', null,1),
+('Gislayno de Almeida', 'QA', 'ana@solutionsburnit.com', null,2),
+('Zazaleu de Bezerra', 'Dev', 'camila@infratech.com', null,3);
 
 	-- Criar tabela Endereco
 	CREATE TABLE Endereco (
@@ -72,13 +56,17 @@ INSERT INTO Usuario (nome, senha, fkEmpresa, fkFuncionario) VALUES
 
 	-- Criar tabela Notebook
 	CREATE TABLE Notebook (
-	  id INT AUTO_INCREMENT PRIMARY KEY,
+	  id INT AUTO_INCREMENT,
 	  sistemaOperacional VARCHAR(45),
 	  fabricante VARCHAR(45),
 	  arquitetura VARCHAR(45),
 	  fkFuncionario INT,
+      fkEmpresa INT,
 	  CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
-			REFERENCES Funcionario (id)
+			REFERENCES Funcionario (id),
+	  CONSTRAINT FK_Notebook_Empresa FOREIGN KEY (fkEmpresa)
+			REFERENCES Empresa (id),
+	  PRIMARY KEY(id, fkEmpresa)
 	);
 
 	-- Criar tabela CPU
@@ -199,5 +187,6 @@ select * from LogCpu;
 select * from Ram join LogRam on Ram.id = fkRam;
 select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
 select * from DiscoRigido;
-SELECT LAST_INSERT_ID() from DiscoRigido;
-select * from Funcionario;
+select * from Funcionario where senha is null;
+
+select count(*) from Notebook where fkEmpresa = 3 And id = 1;
