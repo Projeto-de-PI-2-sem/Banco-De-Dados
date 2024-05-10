@@ -1,9 +1,6 @@
 create database notelog;
 
--- drop database notelog;
-
 use notelog;
-
 
 	-- Criar tabela Empresa
 	CREATE TABLE Empresa (
@@ -174,19 +171,18 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
     
     FLUSH PRIVILEGES;
     
-select * from Geolocalizacao;
-select * from Notebook;	
-select * from TempoDeAtividade;
-select * from Ram;
-select * from DiscoRigido;
-select * from `Cpu`;
-select * from LogRam;
-select * from LogDisco;
-select * from LogJanelas;
-select * from LogCpu;
-select * from Ram join LogRam on Ram.id = fkRam;
-select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
-select * from DiscoRigido;
-select * from Funcionario where senha is null;
-
-select count(*) from Notebook where fkEmpresa = 3 And id = 1;
+-- select * from Geolocalizacao;
+-- select * from Notebook;	
+-- select * from TempoDeAtividade;
+-- select * from Ram;
+-- select * from DiscoRigido;
+-- select * from LogRam;
+-- select * from LogDisco;
+-- select * from LogJanelas;
+-- select * from LogCpu;
+-- select * from Ram join LogRam on Ram.id = fkRam;
+-- select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
+-- select * from DiscoRigido;
+-- select * from Funcionario;
+-- update TempoDeAtividade set tempoDeAtividade = 3 where tempoInicializado = '2024-05-10T12:33:59Z' AND fkNotebook = 1;
+-- SELECT id from Ram ORDER BY id DESC LIMIT 1;
