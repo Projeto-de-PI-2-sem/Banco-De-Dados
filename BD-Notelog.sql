@@ -1,5 +1,5 @@
 create database notelog;
-
+-- drop database notelog;
 use notelog;
 
 	-- Criar tabela Empresa
@@ -84,6 +84,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	  id INT AUTO_INCREMENT PRIMARY KEY,
 	  fkCpu INT,
 	  porcentagemUso VARCHAR(45),
+      dataLog datetime,
 	  CONSTRAINT FK_LogCpu_Cpu FOREIGN KEY (fkCpu)
 		REFERENCES `Cpu` (id)
 	);
@@ -93,6 +94,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	  id INT AUTO_INCREMENT PRIMARY KEY,
 	  idJanela VARCHAR(45),
 	  fkNotebook INT,
+	  dataLog datetime,
 	  CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
@@ -104,6 +106,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 		modelo VARCHAR(45),
 		`serial` VARCHAR(45),
 		tamanho VARCHAR(45),
+        dataLog datetime,
 	  CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
@@ -116,6 +119,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 		bytesLeitura VARCHAR(45),
 		escrita VARCHAR(45),
 		bytesEscrita VARCHAR(45),
+        dataLog datetime,
 		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
 			REFERENCES DiscoRigido (id)
 	);
@@ -145,6 +149,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 		fkRam INT,
 		usoMemoria VARCHAR(45),
 		memoriaDisponivel VARCHAR(45),
+        dataLog datetime,
 		CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
 			REFERENCES Ram (id)
 	);
