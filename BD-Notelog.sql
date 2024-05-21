@@ -93,8 +93,8 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	CREATE TABLE LogJanelas (
 	  id INT AUTO_INCREMENT PRIMARY KEY,
 	  idJanela VARCHAR(45),
+      nomeJanela varchar(100),
 	  fkNotebook INT,
-	  dataLog datetime,
 	  CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
@@ -115,15 +115,12 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	CREATE TABLE LogDisco (
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		fkDiscoRigido int,
-		leitura VARCHAR(45),
-		bytesLeitura VARCHAR(45),
-		escrita VARCHAR(45),
-		bytesEscrita VARCHAR(45),
+		usoDisco varchar(64),
         dataLog datetime,
 		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
 			REFERENCES DiscoRigido (id)
 	);
-
+    
 	-- Criando tabela TempoDeAtividade
 	CREATE TABLE TempoDeAtividade (
 		id INT PRIMARY KEY AUTO_INCREMENT,
@@ -165,17 +162,17 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	  latitude VARCHAR(45),
 	  longitude VARCHAR(45),
 	  timeZone VARCHAR(6),
-	  companiaInternet VARCHAR(45),
+	  companiaInternet VARCHAR(80),
 	  CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
 			REFERENCES Notebook (id)
 	);
+
     
     CREATE USER 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeagod';
     
     GRANT SELECT, INSERT, UPDATE, DELETE ON notelog.* TO 'notelogUser'@'localhost';
     
     FLUSH PRIVILEGES;
-    
 -- select * from Geolocalizacao;
 -- select * from Notebook;	
 -- select * from TempoDeAtividade;
@@ -186,7 +183,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 -- select * from LogJanelas;
 -- select * from LogCpu;
 -- select * from Ram join LogRam on Ram.id = fkRam;
--- select * from `Cpu` join LogCpu on `Cpu`.id = fkCpu;
+-- select * from `Cpu`;
 -- select * from DiscoRigido;
 -- select * from Funcionario;
 -- update TempoDeAtividade set tempoDeAtividade = 3 where tempoInicializado = '2024-05-10T12:33:59Z' AND fkNotebook = 1;
