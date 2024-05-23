@@ -93,7 +93,8 @@ CREATE TABLE LogCpu (
 CREATE TABLE LogJanelas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	idJanela VARCHAR(45),
-	nomeJanela varchar(100),
+	nomeJanela VARCHAR(100),
+    bloqueado BOOLEAN,
 	fkNotebook INT,
 	CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
 	REFERENCES Notebook (id)
@@ -139,10 +140,6 @@ CREATE TABLE TempoDeAtividade (
 	  CONSTRAINT FK_Ram_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
-    
-    insert into LogRam values
-    (null, 1, '16430551020', '20', null);
-
 	-- Criando tabela LogRAM
 	CREATE TABLE LogRam (
 		id INT AUTO_INCREMENT PRIMARY KEY,
