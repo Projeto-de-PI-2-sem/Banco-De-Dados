@@ -5,9 +5,9 @@ use notelog;
 	-- Criar tabela Empresa
 	CREATE TABLE Empresa (
 		id INT PRIMARY KEY AUTO_INCREMENT,
-		nome VARCHAR(45),
+		nome VARCHAR(90),
 		cnpj CHAR(18),
-		email VARCHAR(45)
+		email VARCHAR(90)
 	);
     
 INSERT INTO Empresa (nome,CNPJ, email) VALUES 
@@ -19,10 +19,10 @@ INSERT INTO Empresa (nome,CNPJ, email) VALUES
 	-- Criar tabela Funcionario
 CREATE TABLE Funcionario (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45),
-    cargo CHAR(45),
-    email VARCHAR(45),
-    senha VARCHAR(45),
+    nome VARCHAR(90),
+    cargo CHAR(90),
+    email VARCHAR(90),
+    senha VARCHAR(90),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
         REFERENCES Empresa(id)
@@ -40,12 +40,12 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	-- Criar tabela Endereco
 	CREATE TABLE Endereco (
 		id INT PRIMARY KEY AUTO_INCREMENT,
-		bairro VARCHAR(45),
-		rua VARCHAR(45),
-		estado VARCHAR(45),
-		numero VARCHAR(45),
-		complemento VARCHAR(45),
-		cep CHAR(8),
+		bairro VARCHAR(90),
+		rua VARCHAR(90),
+		estado VARCHAR(90),
+		numero VARCHAR(90),
+		complemento VARCHAR(90),
+		cep VARCHAR(45),
 		fkEmpresa INT,
 		CONSTRAINT FK_Endereco_Empresa FOREIGN KEY (fkEmpresa)
 			REFERENCES Empresa(id)
@@ -54,9 +54,9 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 	-- Criar tabela Notebook
 CREATE TABLE Notebook (
 	id INT AUTO_INCREMENT,
-	sistemaOperacional VARCHAR(45),
-	fabricante VARCHAR(45),
-	arquitetura VARCHAR(45),
+	sistemaOperacional VARCHAR(90),
+	fabricante VARCHAR(90),
+	arquitetura VARCHAR(90),
 	fkFuncionario INT,
 	fkEmpresa INT,
 	CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
@@ -70,11 +70,11 @@ CREATE TABLE Notebook (
 CREATE TABLE `Cpu` (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	fkNotebook INT,
-	nome VARCHAR(45),
-	numeroFisico VARCHAR(45),
-	numerologico VARCHAR(45),
-	idFisicoProcessador VARCHAR(45),
-	frequencia VARCHAR(45),
+	nome VARCHAR(90),
+	numeroFisico VARCHAR(90),
+	numerologico VARCHAR(90),
+	idFisicoProcessador VARCHAR(90),
+	frequencia VARCHAR(90),
 	CONSTRAINT FK_Cpu_Notebook FOREIGN KEY (fkNotebook)
 	REFERENCES Notebook (id)
 );
@@ -83,7 +83,7 @@ CREATE TABLE `Cpu` (
 CREATE TABLE LogCpu (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	fkCpu INT,
-	porcentagemUso VARCHAR(45),
+	porcentagemUso VARCHAR(90),
 	dataLog datetime,
 	CONSTRAINT FK_LogCpu_Cpu FOREIGN KEY (fkCpu)
 	REFERENCES `Cpu` (id)
@@ -92,8 +92,8 @@ CREATE TABLE LogCpu (
 	-- Criar tabela LogJanelas
 CREATE TABLE LogJanelas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	idJanela VARCHAR(45),
-	nomeJanela VARCHAR(100),
+	idJanela VARCHAR(90),
+	nomeJanela VARCHAR(200),
     bloqueado BOOLEAN,
 	fkNotebook INT,
 	CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
@@ -104,9 +104,9 @@ CREATE TABLE LogJanelas (
 CREATE TABLE DiscoRigido (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	fkNotebook INT,
-	modelo VARCHAR(45),
-	`serial` VARCHAR(45),
-	tamanho VARCHAR(45),
+	modelo VARCHAR(135),
+	`serial` VARCHAR(90),
+	tamanho VARCHAR(90),
 	dataLog datetime,
 	CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
 	REFERENCES Notebook (id)
@@ -116,7 +116,7 @@ CREATE TABLE DiscoRigido (
 CREATE TABLE LogDisco (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	fkDiscoRigido int,
-	usoDisco varchar(64),
+	usoDisco varchar(128),
 	dataLog datetime,
 	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
 		REFERENCES DiscoRigido (id)
@@ -126,8 +126,8 @@ CREATE TABLE LogDisco (
 CREATE TABLE TempoDeAtividade (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	fkNotebook INT,
-	tempoDeAtividade VARCHAR(45),
-	tempoInicializado VARCHAR(45),
+	tempoDeAtividade VARCHAR(90),
+	tempoInicializado VARCHAR(90),
 	CONSTRAINT FK_TempoDeAtividade_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 );
@@ -136,7 +136,7 @@ CREATE TABLE TempoDeAtividade (
 	CREATE TABLE Ram (
 		id INT PRIMARY KEY AUTO_INCREMENT,
         fkNotebook INT,
-		totalMemoria varchar(45),
+		totalMemoria varchar(90),
 	  CONSTRAINT FK_Ram_Notebook FOREIGN KEY (fkNotebook)
 		REFERENCES Notebook (id)
 	);
@@ -144,8 +144,8 @@ CREATE TABLE TempoDeAtividade (
 	CREATE TABLE LogRam (
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		fkRam INT,
-		usoMemoria VARCHAR(45),
-		memoriaDisponivel VARCHAR(45),
+		usoMemoria VARCHAR(90),
+		memoriaDisponivel VARCHAR(90),
         dataLog datetime,
 		CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
 			REFERENCES Ram (id)
@@ -155,14 +155,14 @@ CREATE TABLE TempoDeAtividade (
 	CREATE TABLE Geolocalizacao (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fkNotebook INT,
-    enderecoIP VARCHAR(45),
-    pais VARCHAR(45),
-    cidade VARCHAR(45),
-    nomeRegiao VARCHAR(45),
-    latitude VARCHAR(45),
-    longitude VARCHAR(45),
-    timeZone VARCHAR(6),
-    companiaInternet VARCHAR(80),
+    enderecoIP VARCHAR(90),
+    pais VARCHAR(90),
+    cidade VARCHAR(90),
+    nomeRegiao VARCHAR(90),
+    latitude VARCHAR(90),
+    longitude VARCHAR(90),
+    timeZone VARCHAR(12),
+    companiaInternet VARCHAR(160),
     CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
         REFERENCES Notebook (id)
 );
