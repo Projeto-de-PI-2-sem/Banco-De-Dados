@@ -114,14 +114,17 @@ CREATE TABLE DiscoRigido (
 );
 
 -- Criar tabela LogDisco
-CREATE TABLE LogDisco (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	fkDiscoRigido int,
-	usoDisco varchar(128),
-	dataLog datetime,
-	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
-		REFERENCES DiscoRigido (id)
-);
+	CREATE TABLE LogDisco (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		fkDiscoRigido int,
+		leitura VARCHAR(45),
+		bytesLeitura VARCHAR(45),
+		escrita VARCHAR(45),
+		bytesEscrita VARCHAR(45),
+        dataLog datetime,
+		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
+			REFERENCES DiscoRigido (id)
+	);
     
 -- Criando tabela TempoDeAtividade
 CREATE TABLE TempoDeAtividade (
@@ -180,7 +183,7 @@ CREATE TABLE TempoDeAtividade (
 -- select * from Ram;
 -- select * from DiscoRigido;
 -- select * from LogRam;
-select * from LogDisco;
+-- select * from LogDisco;
 -- select * from LogJanelas;
 -- select * from LogCpu;
 -- select * from Ram join LogRam on Ram.id = fkRam;
