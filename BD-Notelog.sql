@@ -57,6 +57,7 @@ CREATE TABLE Notebook (
 	sistemaOperacional VARCHAR(90),
 	fabricante VARCHAR(90),
 	arquitetura VARCHAR(90),
+    numeroSerial VARCHAR(180),
 	fkFuncionario INT,
 	fkEmpresa INT,
 	CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
@@ -65,6 +66,7 @@ CREATE TABLE Notebook (
 		REFERENCES Empresa (id),
 	PRIMARY KEY(id, fkEmpresa)
 );
+
 
 -- Criar tabela CPU
 CREATE TABLE `Cpu` (
@@ -107,7 +109,6 @@ CREATE TABLE DiscoRigido (
 	modelo VARCHAR(135),
 	`serial` VARCHAR(90),
 	tamanho VARCHAR(90),
-	dataLog datetime,
 	CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
 	REFERENCES Notebook (id)
 );
@@ -179,7 +180,7 @@ CREATE TABLE TempoDeAtividade (
 -- select * from Ram;
 -- select * from DiscoRigido;
 -- select * from LogRam;
--- select * from LogDisco;
+select * from LogDisco;
 -- select * from LogJanelas;
 -- select * from LogCpu;
 -- select * from Ram join LogRam on Ram.id = fkRam;
