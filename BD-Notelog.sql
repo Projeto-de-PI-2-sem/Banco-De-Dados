@@ -7,14 +7,15 @@ use notelog;
 		id INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(90),
 		cnpj CHAR(18),
-		email VARCHAR(90)
+		email VARCHAR(90),
+        webHookUrl VARCHAR (350),
+        oAuthToken VARCHAR (350),
+        slackChannel VARCHAR (90)
 	);
-    
-INSERT INTO Empresa (nome,CNPJ, email) VALUES 
-('Moveis S.A','08.540.322/0001-35','moveissa@gmail.com'),
-('SolutionsBurn IT','65.719.677/0001-20','solutionsburnit@gmail.com'),
-('InfraTech','26.897.566/0001-51','infratech@gmail.com');
-
+            
+-- Procurar o insert das empresas no Google driver do banco,
+-- Eles possuem tokens do Slack, que não podem ser enviados para o Github.
+-- tá no driver da conta da infraview. :)
 
 	-- Criar tabela Funcionario
 CREATE TABLE Funcionario (
