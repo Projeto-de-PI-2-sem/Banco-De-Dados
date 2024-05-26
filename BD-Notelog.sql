@@ -12,7 +12,7 @@ use notelog;
         oAuthToken VARCHAR (350),
         slackChannel VARCHAR (90)
 	);
-            
+               
 -- Procurar o insert das empresas no Google driver do banco,
 -- Eles possuem tokens do Slack, que não podem ser enviados para o Github.
 -- tá no driver da conta da infraview. :)
@@ -193,3 +193,16 @@ CREATE TABLE TempoDeAtividade (
 -- select * from Funcionario;
 -- update TempoDeAtividade set tempoDeAtividade = 3 where tempoInicializado = '2024-05-10T12:33:59Z' AND fkNotebook = 1;
 -- SELECT id from Ram ORDER BY id DESC LIMIT 1;
+/*
+Select Empresa.id from Empresa
+join Notebook on Empresa.id = Notebook.fkEmpresa
+Join `Cpu` on `Cpu`.fkNotebook = Notebook.id
+Join LogCPU on LogCpu.fkCpu = `Cpu`.id WHERE LogCPU.id = 1;
+*/
+
+/*
+Select * from Empresa
+join Notebook on Empresa.id = Notebook.fkEmpresa
+Join Ram on Ram .fkNotebook = Notebook.id
+Join LogRam on LogRam.fkRam = Ram.id WHERE LogRam.fkRam = 1 LIMIT 1;
+*/
