@@ -26,7 +26,7 @@ CREATE TABLE Funcionario (
     senha VARCHAR(90),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
-        REFERENCES Empresa(id)
+        REFERENCES Empresa(id) ON DELETE CASCADE
 );
     
     -- Usuários para Moveis S.A
@@ -49,7 +49,7 @@ INSERT INTO Funcionario (nome, cargo, email, senha, fkEmpresa) VALUES
 		cep VARCHAR(45),
 		fkEmpresa INT,
 		CONSTRAINT FK_Endereco_Empresa FOREIGN KEY (fkEmpresa)
-			REFERENCES Empresa(id)
+			REFERENCES Empresa(id) ON DELETE CASCADE
 	);
 
 	-- Criar tabela Notebook
@@ -62,9 +62,9 @@ CREATE TABLE Notebook (
 	fkFuncionario INT,
 	fkEmpresa INT,
 	CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
-		REFERENCES Funcionario (id),
+		REFERENCES Funcionario (id) ON DELETE SET NULL,
 	CONSTRAINT FK_Notebook_Empresa FOREIGN KEY (fkEmpresa)
-		REFERENCES Empresa (id),
+		REFERENCES Empresa (id) ON DELETE CASCADE,
 	PRIMARY KEY(id, fkEmpresa)
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE `Cpu` (
 	idFisicoProcessador VARCHAR(90),
 	frequencia VARCHAR(90),
 	CONSTRAINT FK_Cpu_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id)
+	REFERENCES Notebook (id) ON DELETE CASCADE
 );
 
 	-- Criar tabela LogCPU
@@ -89,7 +89,7 @@ CREATE TABLE LogCpu (
 	porcentagemUso VARCHAR(90),
 	dataLog datetime,
 	CONSTRAINT FK_LogCpu_Cpu FOREIGN KEY (fkCpu)
-	REFERENCES `Cpu` (id)
+	REFERENCES `Cpu` (id) ON DELETE CASCADE
 );
 
 	-- Criar tabela LogJanelas
@@ -100,7 +100,7 @@ CREATE TABLE LogJanelas (
     bloqueado BOOLEAN,
 	fkNotebook INT,
 	CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id)
+	REFERENCES Notebook (id) ON DELETE CASCADE
 );
 
 -- Criar tabela Disco
@@ -111,21 +111,18 @@ CREATE TABLE DiscoRigido (
 	`serial` VARCHAR(90),
 	tamanho VARCHAR(90),
 	CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id)
+	REFERENCES Notebook (id) ON DELETE CASCADE
 );
 
 -- Criar tabela LogDisco
-	CREATE TABLE LogDisco (
-		id INT AUTO_INCREMENT PRIMARY KEY,
-		fkDiscoRigido int,
-		leitura VARCHAR(45),
-		bytesLeitura VARCHAR(45),
-		escrita VARCHAR(45),
-		bytesEscrita VARCHAR(45),
-        dataLog datetime,
-		CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
-			REFERENCES DiscoRigido (id)
-	);
+CREATE TABLE LogDisco (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fkDiscoRigido int,
+	usoDisco varchar(64),
+	dataLog datetime,
+	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
+		REFERENCES DiscoRigido (id) ON DELETE CASCADE
+);
     
 -- Criando tabela TempoDeAtividade
 CREATE TABLE TempoDeAtividade (
@@ -134,7 +131,7 @@ CREATE TABLE TempoDeAtividade (
 	tempoDeAtividade VARCHAR(90),
 	tempoInicializado VARCHAR(90),
 	CONSTRAINT FK_TempoDeAtividade_Notebook FOREIGN KEY (fkNotebook)
-		REFERENCES Notebook (id)
+		REFERENCES Notebook (id) ON DELETE CASCADE
 );
 
 	-- Criando tabela Ram
@@ -143,7 +140,7 @@ CREATE TABLE TempoDeAtividade (
         fkNotebook INT,
 		totalMemoria varchar(90),
 	  CONSTRAINT FK_Ram_Notebook FOREIGN KEY (fkNotebook)
-		REFERENCES Notebook (id)
+		REFERENCES Notebook (id) ON DELETE CASCADE
 	);
 	-- Criando tabela LogRAM
 	CREATE TABLE LogRam (
@@ -153,7 +150,7 @@ CREATE TABLE TempoDeAtividade (
 		memoriaDisponivel VARCHAR(90),
         dataLog datetime,
 		CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
-			REFERENCES Ram (id)
+			REFERENCES Ram (id) ON DELETE CASCADE
 	);
 
 	-- Criando tabela Geolocalizacao
@@ -169,7 +166,7 @@ CREATE TABLE TempoDeAtividade (
     timeZone VARCHAR(12),
     companiaInternet VARCHAR(160),
     CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
-        REFERENCES Notebook (id)
+        REFERENCES Notebook (id) ON DELETE CASCADE
 );
 
     
@@ -189,20 +186,8 @@ CREATE TABLE TempoDeAtividade (
 -- select * from LogCpu;
 -- select * from Ram join LogRam on Ram.id = fkRam;
 -- select * from `Cpu`;
--- select * from DiscoRigido;
--- select * from Funcionario;
+-- select DiscoRigido.tamanho from DiscoRigido;
+-- select * from Funcionario where fkEmpresa = 3;
 -- update TempoDeAtividade set tempoDeAtividade = 3 where tempoInicializado = '2024-05-10T12:33:59Z' AND fkNotebook = 1;
 -- SELECT id from Ram ORDER BY id DESC LIMIT 1;
-/*
-Select Empresa.id from Empresa
-join Notebook on Empresa.id = Notebook.fkEmpresa
-Join `Cpu` on `Cpu`.fkNotebook = Notebook.id
-Join LogCPU on LogCpu.fkCpu = `Cpu`.id WHERE LogCPU.id = 1;
-*/
 
-/*
-Select * from Empresa
-join Notebook on Empresa.id = Notebook.fkEmpresa
-Join Ram on Ram .fkNotebook = Notebook.id
-Join LogRam on LogRam.fkRam = Ram.id WHERE LogRam.fkRam = 1 LIMIT 1;
-*/
