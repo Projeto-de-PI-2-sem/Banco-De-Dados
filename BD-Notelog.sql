@@ -170,7 +170,7 @@ CREATE TABLE TempoDeAtividade (
 );
 
     
-    CREATE USER 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeagod';
+    CREATE USER 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeag0d*';
     
     GRANT SELECT, INSERT, UPDATE, DELETE ON notelog.* TO 'notelogUser'@'localhost';
     
