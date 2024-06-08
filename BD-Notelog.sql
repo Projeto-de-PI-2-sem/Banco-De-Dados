@@ -1,14 +1,15 @@
 create database IF NOT EXISTS notelog;
+-- drop database notelog;
 use notelog;
 
 -- Criar tabela Empresa
 CREATE TABLE IF NOT EXISTS Empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	id INT PRIMARY KEY,
 	nome VARCHAR(90)
 );
 
 INSERT IGNORE INTO Empresa VALUES 
-(1, 'Empresa');
+(null, 'Empresa');
 
 -- Criar tabela Funcionario
 CREATE TABLE IF NOT EXISTS Funcionario (
