@@ -1,43 +1,20 @@
-create database notelog;
+create database IF NOT EXISTS notelog;
 -- drop database notelog;
 use notelog;
 
 -- Criar tabela Empresa
-CREATE TABLE Empresa (
+CREATE TABLE IF NOT EXISTS Empresa (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(90),
-	cnpj CHAR(18),
-	email VARCHAR(90),
-	webHookUrl VARCHAR (350),
-	oAuthToken VARCHAR (350),
-	slackChannel VARCHAR (90)
+	nome VARCHAR(90)
 );
 
--- Procurar o insert das empresas no Google driver do banco,
--- Eles possuem tokens do Slack, que não podem ser enviados para o Github.
--- tá no driver da conta da infraview. :)
-
--- Criar tabela Endereco
-CREATE TABLE Endereco (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	bairro VARCHAR(90),
-	rua VARCHAR(90),
-	estado VARCHAR(90),
-	numero VARCHAR(90),
-	complemento VARCHAR(90),
-	cep VARCHAR(45),
-	fkEmpresa INT,
-	CONSTRAINT FK_Endereco_Empresa FOREIGN KEY (fkEmpresa)
-	REFERENCES Empresa(id) ON DELETE CASCADE
-);
+INSERT IGNORE INTO Empresa VALUES 
+(1, 'Empresa');
 
 -- Criar tabela Funcionario
-CREATE TABLE Funcionario (
+CREATE TABLE IF NOT EXISTS Funcionario (
     id INT PRIMARY KEY,
     nome VARCHAR(90),
-    cargo CHAR(90),
-    email VARCHAR(90),
-    senha VARCHAR(90),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
 	REFERENCES Empresa(id) ON DELETE CASCADE
@@ -45,16 +22,11 @@ CREATE TABLE Funcionario (
 
     
 -- Usuários para Moveis S.A
-INSERT INTO Funcionario (id,nome, cargo, email, senha, fkEmpresa) VALUES
-(1,'Jozias Duarte', 'Gerente', 'joao@moveissa.com', 'senha123', 1),
-(2,'Ana Pimpolim', 'Técnico', 'ana@solutionsburnit.com', 'solutions456', 2),
-(3,'Camila da Silva', 'Desenvolvedor', 'camila@infratech.com', 'infra789', 3),
-(4,'Henrique de Moraes', 'Dev', 'joao@moveissa.com', null,1),
-(5,'Gislayno de Almeida', 'QA', 'ana@solutionsburnit.com', null,2),
-(6,'Zazaleu de Bezerra', 'Dev', 'camila@infratech.com', null,3);
+INSERT IGNORE INTO Funcionario VALUES
+(1,'Funcionario',1);
 
 -- Criar tabela Notebook
-CREATE TABLE Notebook (
+CREATE TABLE IF NOT EXISTS Notebook (
 	id INT PRIMARY Key,
 	sistemaOperacional VARCHAR(90),
 	fabricante VARCHAR(90),
@@ -70,7 +42,7 @@ CREATE TABLE Notebook (
 
 
 -- Criar tabela CPU
-CREATE TABLE `Cpu` (
+CREATE TABLE IF NOT EXISTS `Cpu` (
 	id INT PRIMARY KEY,
 	fkNotebook INT,
 	nome VARCHAR(90),
@@ -83,7 +55,7 @@ CREATE TABLE `Cpu` (
 );
 
 -- Criar tabela LogCPU
-CREATE TABLE LogCpu (
+CREATE TABLE IF NOT EXISTS LogCpu (
 	id INT PRIMARY KEY,
 	fkCpu INT,
 	porcentagemUso VARCHAR(90),
@@ -93,7 +65,7 @@ CREATE TABLE LogCpu (
 );
 
 -- Criar tabela LogJanelas
-CREATE TABLE LogJanelas (
+CREATE TABLE IF NOT EXISTS LogJanelas (
 	id INT PRIMARY KEY,
 	idJanela VARCHAR(90),
 	nomeJanela VARCHAR(200),
@@ -104,7 +76,7 @@ CREATE TABLE LogJanelas (
 );
 
 -- Criar tabela Disco
-CREATE TABLE DiscoRigido (
+CREATE TABLE IF NOT EXISTS DiscoRigido (
 	id INT PRIMARY KEY,
 	fkNotebook INT,
 	modelo VARCHAR(135),
@@ -115,7 +87,7 @@ CREATE TABLE DiscoRigido (
 );
 
 -- Criar tabela LogDisco
-CREATE TABLE LogDisco (
+CREATE TABLE IF NOT EXISTS LogDisco (
 	id INT PRIMARY KEY ,
 	fkDiscoRigido int,
 	usoDisco varchar(64),
@@ -123,11 +95,9 @@ CREATE TABLE LogDisco (
 	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
 	REFERENCES DiscoRigido (id) ON DELETE CASCADE
 );
-
-SELECT id FROM LogDisco WHERE fkDiscoRigido = 1 ORDER BY id DESC LIMIT 1;
     
 -- Criando tabela TempoDeAtividade
-CREATE TABLE TempoDeAtividade (
+CREATE TABLE IF NOT EXISTS TempoDeAtividade (
 	id INT PRIMARY KEY,
 	fkNotebook INT,
 	tempoDeAtividade VARCHAR(90),
@@ -137,7 +107,7 @@ CREATE TABLE TempoDeAtividade (
 );
 
 	-- Criando tabela Ram
-CREATE TABLE Ram (
+CREATE TABLE IF NOT EXISTS Ram (
 	id INT PRIMARY KEY,
 	fkNotebook INT,
 	totalMemoria varchar(90),
@@ -146,7 +116,7 @@ CREATE TABLE Ram (
 	);
     
 -- Criando tabela LogRAM
-CREATE TABLE LogRam (
+CREATE TABLE IF NOT EXISTS LogRam (
 	id INT PRIMARY KEY,
 	fkRam INT,
 	usoMemoria VARCHAR(90),
@@ -157,7 +127,7 @@ CREATE TABLE LogRam (
 );
 
 -- Criando tabela Geolocalizacao
-CREATE TABLE Geolocalizacao (
+CREATE TABLE IF NOT EXISTS Geolocalizacao (
     id INT PRIMARY KEY,
     fkNotebook INT,
     enderecoIP VARCHAR(90),
@@ -170,29 +140,10 @@ CREATE TABLE Geolocalizacao (
     companiaInternet VARCHAR(160),
     CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
 	REFERENCES Notebook (id) ON DELETE CASCADE
-)
-;
+);
     
-    CREATE USER 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeag0d*';
+    CREATE USER IF NOT EXISTS 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeag0d*';
     
     GRANT SELECT, INSERT, UPDATE, DELETE ON notelog.* TO 'notelogUser'@'localhost';
     
     FLUSH PRIVILEGES;
--- select * from Empresa;
--- select * from funcionario;
--- select * from Geolocalizacao;
--- select * from Notebook;	
--- select * from TempoDeAtividade;
--- select * from Ram;
--- select * from DiscoRigido;
--- select * from LogRam;
--- select * from LogDisco;
--- select * from LogJanelas;
--- select * from LogCpu;
--- select * from Ram join LogRam on Ram.id = fkRam;
--- select * from `Cpu`;
--- select DiscoRigido.tamanho from DiscoRigido;
--- select * from Funcionario where fkEmpresa = 3;
--- update TempoDeAtividade set tempoDeAtividade = 3 where tempoInicializado = '2024-05-10T12:33:59Z' AND fkNotebook = 1;
--- SELECT id from Ram ORDER BY id DESC LIMIT 1;
-
