@@ -1,5 +1,4 @@
 create database IF NOT EXISTS notelog;
--- drop database notelog;
 use notelog;
 
 -- Criar tabela Empresa
@@ -15,15 +14,13 @@ INSERT IGNORE INTO Empresa VALUES
 CREATE TABLE IF NOT EXISTS Funcionario (
     id INT PRIMARY KEY,
     nome VARCHAR(90),
+    cargo CHAR(90),
+    email VARCHAR(90),
+    senha VARCHAR(90),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
 	REFERENCES Empresa(id) ON DELETE CASCADE
 );
-
-    
--- Usuários para Moveis S.A
-INSERT IGNORE INTO Funcionario VALUES
-(1,'Funcionario',1);
 
 -- Criar tabela Notebook
 CREATE TABLE IF NOT EXISTS Notebook (
