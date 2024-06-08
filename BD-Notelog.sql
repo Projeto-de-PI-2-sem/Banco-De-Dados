@@ -12,7 +12,11 @@ CREATE TABLE Empresa (
 	oAuthToken VARCHAR (350),
 	slackChannel VARCHAR (90)
 );
-    
+
+-- Procurar o insert das empresas no Google driver do banco,
+-- Eles possuem tokens do Slack, que não podem ser enviados para o Github.
+-- tá no driver da conta da infraview. :)
+
 -- Criar tabela Endereco
 CREATE TABLE Endereco (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -38,6 +42,16 @@ CREATE TABLE Funcionario (
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
 	REFERENCES Empresa(id) ON DELETE CASCADE
 );
+
+    
+-- Usuários para Moveis S.A
+INSERT INTO Funcionario (id,nome, cargo, email, senha, fkEmpresa) VALUES
+(1,'Jozias Duarte', 'Gerente', 'joao@moveissa.com', 'senha123', 1),
+(2,'Ana Pimpolim', 'Técnico', 'ana@solutionsburnit.com', 'solutions456', 2),
+(3,'Camila da Silva', 'Desenvolvedor', 'camila@infratech.com', 'infra789', 3),
+(4,'Henrique de Moraes', 'Dev', 'joao@moveissa.com', null,1),
+(5,'Gislayno de Almeida', 'QA', 'ana@solutionsburnit.com', null,2),
+(6,'Zazaleu de Bezerra', 'Dev', 'camila@infratech.com', null,3);
 
 -- Criar tabela Notebook
 CREATE TABLE Notebook (
@@ -109,6 +123,8 @@ CREATE TABLE LogDisco (
 	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
 	REFERENCES DiscoRigido (id) ON DELETE CASCADE
 );
+
+SELECT id FROM LogDisco WHERE fkDiscoRigido = 1 ORDER BY id DESC LIMIT 1;
     
 -- Criando tabela TempoDeAtividade
 CREATE TABLE TempoDeAtividade (
