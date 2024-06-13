@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Funcionario (
     nome VARCHAR(90),
     fkEmpresa INT,
     CONSTRAINT FK_Funcionario_Empresa FOREIGN KEY (fkEmpresa)
-	REFERENCES Empresa(id) ON DELETE CASCADE
+	REFERENCES Empresa(id) ON UPDATE CASCADE
 );
 
 INSERT INTO Funcionario (id, nome, fkEmpresa) VALUES 
