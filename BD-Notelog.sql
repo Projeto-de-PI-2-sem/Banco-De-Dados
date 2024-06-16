@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS Notebook (
 	fkFuncionario INT,
 	fkEmpresa INT,
 	CONSTRAINT FK_Notebook_Funcionario FOREIGN KEY (fkFuncionario)
-	REFERENCES Funcionario (id) ON DELETE SET NULL,
+	REFERENCES Funcionario (id) ON UPDATE CASCADE,
 	CONSTRAINT FK_Notebook_Empresa FOREIGN KEY (fkEmpresa)
-	REFERENCES Empresa (id) ON DELETE CASCADE
+	REFERENCES Empresa (id) ON UPDATE CASCADE
 );
 
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `Cpu` (
 	idFisicoProcessador VARCHAR(90),
 	frequencia VARCHAR(90),
 	CONSTRAINT FK_Cpu_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 );
 
 -- Criar tabela LogCPU
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS LogCpu (
 	porcentagemUso VARCHAR(90),
 	dataLog datetime,
 	CONSTRAINT FK_LogCpu_Cpu FOREIGN KEY (fkCpu)
-	REFERENCES `Cpu` (id) ON DELETE CASCADE
+	REFERENCES `Cpu` (id) ON UPDATE CASCADE
 );
 
 -- Criar tabela LogJanelas
@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS LogJanelas (
 	id INT PRIMARY KEY,
 	idJanela VARCHAR(90),
 	nomeJanela VARCHAR(200),
-    bloqueado BOOLEAN,
+    datalog datetime,
 	fkNotebook INT,
 	CONSTRAINT FK_LogJanelas_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 );
 
 -- Criar tabela Disco
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS DiscoRigido (
 	`serial` VARCHAR(90),
 	tamanho VARCHAR(90),
 	CONSTRAINT FK_DiscoRigido_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 );
 
 -- Criar tabela LogDisco
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS LogDisco (
 	usoDisco varchar(64),
 	dataLog datetime,
 	CONSTRAINT FK_LogDisco_DiscoRigido FOREIGN KEY (fkDiscoRigido)
-	REFERENCES DiscoRigido (id) ON DELETE CASCADE
+	REFERENCES DiscoRigido (id) ON UPDATE CASCADE
 );
     
 -- Criando tabela TempoDeAtividade
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS TempoDeAtividade (
 	tempoDeAtividade VARCHAR(90),
 	tempoInicializado VARCHAR(90),
 	CONSTRAINT FK_TempoDeAtividade_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 );
 
 	-- Criando tabela Ram
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS Ram (
 	fkNotebook INT,
 	totalMemoria varchar(90),
 	CONSTRAINT FK_Ram_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 	);
     
 -- Criando tabela LogRAM
@@ -120,12 +120,12 @@ CREATE TABLE IF NOT EXISTS LogRam (
 	memoriaDisponivel VARCHAR(90),
 	dataLog datetime,
 	CONSTRAINT FK_LogRam_Ram FOREIGN KEY (fkRam)
-	REFERENCES Ram (id) ON DELETE CASCADE
+	REFERENCES Ram (id) ON UPDATE CASCADE
 );
 
 -- Criando tabela Geolocalizacao
 CREATE TABLE IF NOT EXISTS Geolocalizacao (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY auto_increment,
     fkNotebook INT,
     enderecoIP VARCHAR(90),
     pais VARCHAR(90),
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS Geolocalizacao (
     timeZone VARCHAR(12),
     companiaInternet VARCHAR(160),
     CONSTRAINT FK_Geolocalizacao_Notebook FOREIGN KEY (fkNotebook)
-	REFERENCES Notebook (id) ON DELETE CASCADE
+	REFERENCES Notebook (id) ON UPDATE CASCADE
 );
     
     CREATE USER IF NOT EXISTS 'notelogUser'@'localhost' IDENTIFIED BY 'notelikeag0d*';
